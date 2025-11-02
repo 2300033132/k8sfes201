@@ -1,19 +1,23 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://ec2-13-222-173-223.compute-1.amazonaws.com:30082/back1/api/products";  // Updated Backend API URL
+const API_BASE_URL = "http://ec2-13-222-173-223.compute-1.amazonaws.com:30083/back1/api";
 
-// Fetch products by category (computers, mobiles, laptops, pendrives, or all)
+// Fetch products by category
 export const getProducts = async (category = "") => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/${category}`);
-    return response.data;  // Return products array
+    const url = category 
+      ? `${API_BASE_URL}/products/${category}`
+      : `${API_BASE_URL}/products`;
+
+    const response = await axios.get(url);
+    return response.data;
   } catch (error) {
     console.error("Error fetching products:", error);
-    return []; // Return empty array on error
+    return [];
   }
 };
 
 // Get product image URL
 export const getProductImageUrl = (imagePath) => {
-  return `${API_BASE_URL}/images/${imagePath}`;
+  return `${API_BASE_URL}/products/images/${imagePath}`;
 };
